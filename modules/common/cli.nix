@@ -58,6 +58,7 @@
     powertop
     python3
     reptyr
+    ripgrep
     s3cmd
     squashfsTools
     sshuttle
