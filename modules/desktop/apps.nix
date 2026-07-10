@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ pkgs, pkgs-stable, user, ... }:
 {
   home-manager.users.${user}.home.packages = with pkgs; [
     audacity
@@ -18,7 +18,7 @@
     ffmpeg
     geeqie
     gimp-with-plugins
-    handbrake
+    pkgs-stable.handbrake
     imagemagick
     jellyfin-mpv-shim
     jftui

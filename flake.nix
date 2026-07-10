@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     import-tree.url = "github:vic/import-tree";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,12 +17,13 @@
     let
       system = "x86_64-linux";
       pkgs = inputs.nixpkgs.legacyPackages.${system};
+      pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${system};
     in
     {
       nixosConfigurations.decemberflower = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit inputs;
+          inherit inputs pkgs-stable;
           user = "langj";
         };
         modules = [
@@ -37,7 +39,7 @@
       nixosConfigurations.moonshield = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit inputs;
+          inherit inputs pkgs-stable;
           user = "langj";
         };
         modules = [
