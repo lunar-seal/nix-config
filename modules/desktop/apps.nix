@@ -36,6 +36,7 @@
     jetbrains.rider
     jetbrains.rust-rover
     jetbrains.webstorm
+    wireshark
 
     vscodium
     zed-editor
