@@ -1,0 +1,35 @@
+name: check nightly
+
+on:
+  workflow_run:
+    workflows:
+      - update flake.lock
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - decemberflower
+          - moonshield
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: nightly
+      - uses: cachix/install-nix-action@v31
+      - run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run: nix flake lock --no-update-lock-file
+      - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"

@@ -1,0 +1,40 @@
+name: update flake.lock
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: cachix/install-nix-action@v31
+      - run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+          git fetch origin main
+          if git ls-remote --exit-code --heads origin nightly >/dev/null; then
+            git fetch origin nightly
+            git switch -C nightly FETCH_HEAD
+            git merge --no-edit origin/main
+          else
+            git switch -c nightly origin/main
+          fi
+
+          nix flake update
+          git add flake.lock
+          git diff --cached --quiet || git commit -m "chore: update flake.lock"
+          git push origin HEAD:nightly
