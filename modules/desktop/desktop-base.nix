@@ -6,10 +6,11 @@
       wayland.enable = true;
     };
     autoLogin = {
-      enable = true;
+      enable = false;
       inherit user;
     };
   };
+  services.desktopManager.plasma6.enable = true;
   hardware.graphics.enable = true;
 
   security = {
