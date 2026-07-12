@@ -14,14 +14,6 @@ args@{
   networking.hostName = "voices";
   networking.hostId = "db9cf15a";
 
-  # This host bootstraps through SSH keys, without a local password.
-  security.doas.extraRules = lib.mkAfter [
-    {
-      users = [ user ];
-      noPass = true;
-    }
-  ];
-
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
