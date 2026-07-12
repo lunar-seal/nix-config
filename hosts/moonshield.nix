@@ -7,6 +7,9 @@
 {
   networking.hostName = "moonshield";
 
+  # Always at home: read the nix cache straight from voices over the LAN.
+  networking.hosts."192.168.178.134" = [ "redacted.example" ];
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
