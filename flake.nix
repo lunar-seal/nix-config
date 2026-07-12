@@ -62,6 +62,7 @@
           (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/server)
           inputs.disko.nixosModules.disko
+          inputs.nix-private.nixosModules.wireguard
           ./hosts/voices.nix
         ];
       };
