@@ -12,6 +12,8 @@ let
   # Public hostnames fronted by ocar Traefik.
   serverHost = "redacted.example";
   s3Host = "redacted.example";
+  # Anonymous public reads go through Garage's web endpoint, not the S3 API.
+  cacheHost = "redacted.example";
 in
 {
   config = lib.mkIf isVoices {
@@ -40,7 +42,7 @@ in
       # Ed25519 narinfo signing key ("name:base64"); public half goes to consumers.
       signKeyFiles = [ "/var/lib/niks3/cache-sign-key" ];
 
-      cacheUrl = "https://${s3Host}";
+      cacheUrl = "https://${cacheHost}";
       serverUrl = "https://${serverHost}";
 
       # GitHub Actions authenticates with its own OIDC token; no shared secret.

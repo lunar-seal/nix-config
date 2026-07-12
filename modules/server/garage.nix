@@ -50,6 +50,13 @@ in
           root_domain = ".s3.garage";
         };
 
+        # Public read endpoint: anonymous GETs of the (public) nix-cache bucket.
+        s3_web = {
+          bind_addr = "${overlayIp}:3902";
+          root_domain = ".redacted.example";
+          index = "index.html";
+        };
+
         admin = {
           api_bind_addr = "127.0.0.1:3903";
         };
@@ -67,7 +74,10 @@ in
       };
     };
 
-    # Reach the S3 API only over the overlay, not the LAN.
-    networking.firewall.interfaces.wg1.allowedTCPPorts = [ 3900 ];
+    # Reach the S3 API (3900) and public web endpoint (3902) over the overlay.
+    networking.firewall.interfaces.wg1.allowedTCPPorts = [
+      3900
+      3902
+    ];
   };
 }
