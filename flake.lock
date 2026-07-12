@@ -153,11 +153,11 @@
     },
     "nix-private": {
       "locked": {
-        "lastModified": 1783895322,
-        "narHash": "sha256-biAAiLp0sidvBvHtYcpGGMeJwDzCASyYT9LlwEMZXAE=",
+        "lastModified": 1783896597,
+        "narHash": "sha256-10n4cLCE0DV18bE/Mfgal4Mp5N4IDnMueO2RpNvuOuc=",
         "ref": "refs/heads/main",
-        "rev": "e89bf8be6d42fac0c7de371a5fee0197e45caa06",
-        "revCount": 5,
+        "rev": "e718c9ac5b4e3bb4a3caddfb105ee1c939c263fd",
+        "revCount": 6,
         "type": "git",
         "url": "ssh://git@github.com/lunar-seal/nix-private.git"
       },
