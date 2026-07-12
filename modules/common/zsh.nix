@@ -10,7 +10,7 @@
       sudo = "doas";
       c = "clear";
       rsync = "rsync --info=progress2";
-      nrs = "doas nixos-rebuild switch --flake github:lunar-seal/nix-config --refresh";
+      nrs = "nixos-rebuild switch --flake 'git+ssh://git@github.com/lunar-seal/nix-config.git' --elevate run0 --refresh";
     };
     oh-my-zsh = {
       enable = true;
