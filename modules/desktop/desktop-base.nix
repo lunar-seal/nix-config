@@ -10,7 +10,6 @@
       inherit user;
     };
   };
-  services.desktopManager.plasma6.enable = true;
   hardware.graphics.enable = true;
 
   security = {
