@@ -33,10 +33,12 @@
         "flakes"
       ];
       substituters = [
+        "https://redacted.example"
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
       ];
       trusted-public-keys = [
+        "redacted.example-1:qaaysk9cJPH0kTtSMivNHjLJwys4Zi0cDgV3F13w/OM="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
