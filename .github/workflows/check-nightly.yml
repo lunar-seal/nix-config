@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write # OIDC token for niks3 cache uploads
 
 jobs:
   build:
@@ -27,6 +28,9 @@ jobs:
         with:
           ref: nightly
       - uses: cachix/install-nix-action@v31
+      - uses: Mic92/niks3-action@v1
+        with:
+          server-url: https://redacted.example
       - run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
