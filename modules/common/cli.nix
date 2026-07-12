@@ -6,12 +6,18 @@
     fwupd
     lm_sensors
     networkmanager
-    neovim
     ntfs3g
     sbctl
     sox
   ];
   services.fwupd.enable = true;
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
 
   home-manager.users.${user}.home.packages = with pkgs; [
     at

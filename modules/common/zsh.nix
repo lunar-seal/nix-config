@@ -7,8 +7,6 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";
-      vim = "nvim";
-      vi = "nvim";
       sudo = "doas";
       c = "clear";
       rsync = "rsync --info=progress2";
