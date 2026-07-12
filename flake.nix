@@ -3,6 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     import-tree.url = "github:vic/import-tree";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote";
@@ -48,6 +50,24 @@
           inputs.nix-private.nixosModules.default
           ./hosts/moonshield.nix
         ];
+      };
+
+      nixosConfigurations.voices = inputs.nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs pkgs-stable;
+          user = "langj";
+        };
+        modules = [
+          (inputs.import-tree ./modules/common)
+          (inputs.import-tree ./modules/server)
+          inputs.disko.nixosModules.disko
+          ./hosts/voices.nix
+        ];
+      };
+
+      packages.${system} = {
+        inherit (inputs.disko.packages.${system}) disko disko-install;
       };
 
       formatter.${system} = pkgs.nixfmt-tree;
