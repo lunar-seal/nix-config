@@ -1,4 +1,4 @@
-name: build hosts
+name: eval hosts
 
 on:
   workflow_run:
@@ -10,10 +10,9 @@ on:
 
 permissions:
   contents: read
-  id-token: write # OIDC token for niks3 cache uploads
 
 jobs:
-  build:
+  eval:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     strategy:
@@ -27,23 +26,12 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: nightly
-      # Runners have ~14G free; lanzaboote's rust toolchain alone blows that.
-      # Holster only merges the disks' free space into /nix: the default
-      # cleave protocol purges /opt/hostedtoolcache in the background, which
-      # eats the niks3-hook binary mid-run.
-      - uses: wimpysworld/nothing-but-nix@v10
-        with:
-          hatchet-protocol: holster
       - uses: cachix/install-nix-action@v31
-      - uses: Mic92/niks3-action@v1
-        with:
-          server-url: ${{ secrets.NIKS3_SERVER_URL }}
-          # Uploads relay through ocar into the home line; 600s cut them off.
-          drain-timeout: '2700'
       - run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: nix flake lock --no-update-lock-file
-      - run: nix build ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"
+      # Evaluate only; voices builds and serves the closures itself.
+      - run: nix build --dry-run ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"
