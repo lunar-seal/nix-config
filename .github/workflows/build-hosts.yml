@@ -1,4 +1,4 @@
-name: check nightly
+name: build hosts
 
 on:
   workflow_run:
@@ -28,7 +28,12 @@ jobs:
         with:
           ref: nightly
       # Runners have ~14G free; lanzaboote's rust toolchain alone blows that.
+      # Holster only merges the disks' free space into /nix: the default
+      # cleave protocol purges /opt/hostedtoolcache in the background, which
+      # eats the niks3-hook binary mid-run.
       - uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: holster
       - uses: cachix/install-nix-action@v31
       - uses: Mic92/niks3-action@v1
         with:
