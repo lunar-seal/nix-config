@@ -25,16 +25,12 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
+          # nightly is always main plus one fresh lock commit; recreating it
+          # avoids merge conflicts when main also touched flake.lock.
           git fetch origin main
-          if git ls-remote --exit-code --heads origin nightly >/dev/null; then
-            git fetch origin nightly
-            git switch -C nightly FETCH_HEAD
-            git merge --no-edit origin/main
-          else
-            git switch -c nightly origin/main
-          fi
+          git switch -C nightly origin/main
 
           nix flake update
           git add flake.lock
           git diff --cached --quiet || git commit -m "chore: update flake.lock"
-          git push origin HEAD:nightly
+          git push --force origin HEAD:nightly
