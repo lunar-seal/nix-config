@@ -4,22 +4,23 @@ let
 in
 {
   config = lib.mkIf isVoices {
-    # Read-only ssh-ng store access for the other hosts; they authenticate
-    # with their host keys (the client side lives in common/core.nix).
-    nix.sshServe = {
+    # Serve the local store as a binary cache: zstd on the wire, signed
+    # narinfos, no separate storage. LAN-only via the firewall below.
+    services.harmonia = {
       enable = true;
-      protocol = "ssh-ng";
-      keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnN3I/OL9M5oevQ93Cb8fIe6UVo+C/xKLRODt/hi1bq root@moonshield"
-        # User key for ad-hoc store commands outside the daemon.
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8koEKvE/Pgc6QyhDbCFKMwMvWPyLYKWlyl84q6qmXC langj@moonshield"
-        # TODO: decemberflower /etc/ssh/ssh_host_ed25519_key.pub
-      ];
+      signKeyPaths = [ "/var/lib/nix-signing/secret" ];
+      settings = {
+        bind = "[::]:5000";
+        # Preferred over cache.nixos.org (priority 40).
+        priority = 30;
+      };
     };
 
-    # Sign everything built here so clients can verify substituted paths.
-    # Provisioned out-of-band: run0 install -D -m 400 ~/nix-signing/secret \
-    #   /var/lib/nix-signing/secret
+    # Also sign at build time so paths carry signatures independent of the
+    # serving layer. Provisioned out-of-band: run0 install -D -m 400 \
+    #   ~/nix-signing/secret /var/lib/nix-signing/secret
     nix.settings.secret-key-files = [ "/var/lib/nix-signing/secret" ];
+
+    networking.firewall.interfaces.eno2.allowedTCPPorts = [ 5000 ];
   };
 }
