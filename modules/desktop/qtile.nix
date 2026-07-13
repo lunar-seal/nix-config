@@ -221,6 +221,16 @@ let
         ],
     )
 
+    # Nothing else in a bare qtile session tells systemd/dbus where the
+    # display is; without this, user services (portals, drkonqi, ...) start
+    # display-blind and crash.
+    @hook.subscribe.startup
+    def import_session_env():
+        import os
+        env = [v for v in ("WAYLAND_DISPLAY", "DISPLAY", "XDG_CURRENT_DESKTOP") if os.environ.get(v)]
+        if env:
+            subprocess.run(["dbus-update-activation-environment", "--systemd", *env])
+
     @hook.subscribe.startup_once
     def autostart():
         subprocess.Popen(["mako"])
