@@ -38,6 +38,7 @@
     jetbrains.datagrip
     jetbrains.goland
     jetbrains.idea
+    jetbrains.phpstorm
     jetbrains.pycharm
     jetbrains.rider
     jetbrains.rust-rover
