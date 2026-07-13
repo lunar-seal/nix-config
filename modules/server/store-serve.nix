@@ -11,6 +11,8 @@ in
       protocol = "ssh-ng";
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnN3I/OL9M5oevQ93Cb8fIe6UVo+C/xKLRODt/hi1bq root@moonshield"
+        # User key for ad-hoc store commands outside the daemon.
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8koEKvE/Pgc6QyhDbCFKMwMvWPyLYKWlyl84q6qmXC langj@moonshield"
         # TODO: decemberflower /etc/ssh/ssh_host_ed25519_key.pub
       ];
     };
