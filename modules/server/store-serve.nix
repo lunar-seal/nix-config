@@ -6,7 +6,7 @@ in
   config = lib.mkIf isVoices {
     # Serve the local store as a binary cache: zstd on the wire, signed
     # narinfos, no separate storage. LAN-only via the firewall below.
-    services.harmonia = {
+    services.harmonia.cache = {
       enable = true;
       signKeyPaths = [ "/var/lib/nix-signing/secret" ];
       settings = {
