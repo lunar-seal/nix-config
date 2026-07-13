@@ -9,11 +9,14 @@ let
   # wg1 overlay address; the socket listens here so the ocar hub reaches it.
   overlayIp = "10.13.166.6";
 
-  # Public hostnames fronted by ocar Traefik.
-  serverHost = "redacted.example";
-  s3Host = "redacted.example";
-  # Anonymous public reads go through Garage's web endpoint, not the S3 API.
-  cacheHost = "redacted.example";
+  # Push hostnames, fronted by ocar Traefik: the v4-only GitHub runner
+  # cannot reach a CGNAT host directly, so uploads relay over wg1.
+  serverHost = config.private.niks3Host;
+  s3Host = config.private.s3Host;
+  # Pull hostname: anonymous reads go through Garage's web endpoint, not
+  # the S3 API, and resolve straight to voices over v6 (the TLS terminator
+  # and AAAA updater live in nix-private).
+  cacheHost = config.private.cacheHost;
 in
 {
   config = lib.mkIf isVoices {

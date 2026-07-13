@@ -53,7 +53,7 @@ in
         # Public read endpoint: anonymous GETs of the (public) nix-cache bucket.
         s3_web = {
           bind_addr = "${overlayIp}:3902";
-          root_domain = ".redacted.example";
+          root_domain = config.private.webRootDomain;
           index = "index.html";
         };
 

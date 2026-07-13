@@ -1,4 +1,9 @@
-{ pkgs, pkgs-stable, user, ... }:
+{
+  pkgs,
+  pkgs-stable,
+  user,
+  ...
+}:
 {
   home-manager.users.${user}.home.packages = with pkgs; [
     audacity

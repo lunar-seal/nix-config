@@ -3,7 +3,10 @@
   users.users.${user} = {
     isNormalUser = true;
     description = user;
-    extraGroups = [ "wheel" "wireshark"];
+    extraGroups = [
+      "wheel"
+      "wireshark"
+    ];
   };
 
   programs.zsh.enable = true;
