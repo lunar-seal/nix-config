@@ -55,6 +55,11 @@ in
     };
   };
 
+  # Flake inputs fetch over git+ssh; without this a fresh machine (or the
+  # nightly-build unit, which has no TTY to confirm) fails host verification.
+  programs.ssh.knownHosts."github.com".publicKey =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+
   nixpkgs.config.allowUnfree = true;
 
   documentation.dev.enable = true;
