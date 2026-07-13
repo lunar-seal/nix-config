@@ -34,7 +34,7 @@ jobs:
         with:
           server-url: ${{ secrets.NIKS3_SERVER_URL }}
           # Uploads relay through ocar into the home line; 600s cut them off.
-          drain-timeout: '1800'
+          drain-timeout: '2700'
       - run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
