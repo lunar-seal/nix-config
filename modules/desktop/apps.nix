@@ -35,6 +35,7 @@
     zotero
 
     jetbrains.clion
+    jetbrains.datagrip
     jetbrains.goland
     jetbrains.idea
     jetbrains.pycharm
