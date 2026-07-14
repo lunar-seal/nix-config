@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  palette,
   pkgs,
   user,
   ...
@@ -38,12 +39,12 @@ let
     _WIDESCREEN_MIN = 2400
     _side = 1000 if _detect_max_width() >= _WIDESCREEN_MIN else 0
 
-    BG       = "#1a212e"
-    FG       = "#dfdfdf"
-    FOCUSED  = "#007a84"
-    INACTIVE = "#1a212e"
-    FG_ALT   = "#555555"
-    ALERT    = "#bd2c40"
+    BG       = "${palette.background}"
+    FG       = "${palette.foreground}"
+    FOCUSED  = "${palette.focused}"
+    INACTIVE = "${palette.background}"
+    FG_ALT   = "${palette.muted}"
+    ALERT    = "${palette.alert}"
 
     def _focus_or_spawn(qtile, wm_class, cmd):
         needle = wm_class.lower()
