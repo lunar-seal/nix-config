@@ -12,6 +12,10 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-private.url = "git+ssh://git@github.com/lunar-seal/nix-private.git";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "";
+    agenix.inputs.home-manager.follows = "";
   };
 
   outputs =
@@ -19,51 +23,45 @@
     let
       system = "x86_64-linux";
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${system};
+      mkHost =
+        name: modules:
+        inputs.nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${system};
+            user = "langj";
+          };
+          modules = [
+            (inputs.import-tree ./modules/common)
+            inputs.agenix.nixosModules.default
+            # Only the ed25519 host key; never fall back to the RSA one.
+            { age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ]; }
+          ]
+          ++ modules
+          ++ [ ./hosts/${name}.nix ];
+        };
     in
     {
-      nixosConfigurations.decemberflower = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs pkgs-stable;
-          user = "langj";
-        };
-        modules = [
-          (inputs.import-tree ./modules/common)
+      nixosConfigurations = {
+        decemberflower = mkHost "decemberflower" [
           (inputs.import-tree ./modules/desktop)
           (inputs.import-tree ./modules/laptop)
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.nix-private.nixosModules.default
-          ./hosts/decemberflower.nix
         ];
-      };
 
-      nixosConfigurations.moonshield = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs pkgs-stable;
-          user = "langj";
-        };
-        modules = [
-          (inputs.import-tree ./modules/common)
+        moonshield = mkHost "moonshield" [
           (inputs.import-tree ./modules/desktop)
           inputs.nix-private.nixosModules.default
-          ./hosts/moonshield.nix
         ];
-      };
 
-      nixosConfigurations.voices = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs pkgs-stable;
-          user = "langj";
-        };
-        modules = [
-          (inputs.import-tree ./modules/common)
+        voices = mkHost "voices" [
           (inputs.import-tree ./modules/server)
+          ./modules/store-serve
+          ./modules/zed-mail
           inputs.disko.nixosModules.disko
           inputs.nix-private.nixosModules.server
-          ./hosts/voices.nix
         ];
       };
 
@@ -74,7 +72,10 @@
       formatter.${system} = pkgs.nixfmt-tree;
 
       devShells.${system}.default = pkgs.mkShell {
-        packages = [ pkgs.nixfmt-tree ];
+        packages = [
+          pkgs.nixfmt-tree
+          inputs.agenix.packages.${system}.default
+        ];
       };
     };
 }
