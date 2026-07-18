@@ -238,7 +238,7 @@ let
         subprocess.Popen([
             "swaybg", "-i",
             "${wallpaper}",
-            "-m", "center",
+            "-m", "fill",
         ])
 
     dgroups_key_binder  = None
