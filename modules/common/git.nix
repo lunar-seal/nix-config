@@ -4,6 +4,11 @@
     (
       { config, pkgs, ... }:
       {
+        programs.gh = {
+          enable = true;
+          settings.git_protocol = "ssh";
+        };
+
         programs.git = {
           enable = true;
           lfs.enable = true;
