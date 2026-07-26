@@ -34,14 +34,8 @@
     vlc
     zotero
 
-    jetbrains.clion
-    jetbrains.datagrip
     jetbrains.goland
-    jetbrains.idea
-    jetbrains.phpstorm
     jetbrains.pycharm
-    jetbrains.rider
-    jetbrains.rust-rover
     jetbrains.webstorm
     wireshark
 
