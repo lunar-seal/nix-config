@@ -40,7 +40,13 @@
 
   xdg.portal = {
     enable = true;
-    config.common.default = "*";
+    config.common = {
+      default = [ "gtk" ];
+      # qtile is wlroots-based and sets no XDG_CURRENT_DESKTOP, so screencast
+      # must be pinned to the wlr backend or kde/gtk grab it and see no outputs.
+      "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+    };
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     wlr.enable = true;
   };
