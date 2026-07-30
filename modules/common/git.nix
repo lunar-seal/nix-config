@@ -20,7 +20,6 @@
           settings = {
             user = {
               name = "lunar-seal";
-              email = "lunar-seal@users.noreply.github.com";
             };
             alias = {
               ci = "commit";
