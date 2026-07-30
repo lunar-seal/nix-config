@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-stable,
   user,
   ...
 }:
@@ -11,6 +12,7 @@ let
 in
 {
   programs.niri.enable = true;
+  programs.niri.package = pkgs-stable.niri;
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
