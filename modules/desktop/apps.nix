@@ -30,6 +30,7 @@
     libreoffice
     mpv
     mupdf
+    obs-studio
     obsidian
     vlc
     zotero
