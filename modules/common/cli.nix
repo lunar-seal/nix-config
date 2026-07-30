@@ -6,6 +6,7 @@
     fwupd
     lm_sensors
     networkmanager
+    nil
     ntfs3g
     sbctl
     sox

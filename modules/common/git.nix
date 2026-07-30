@@ -19,6 +19,7 @@
           };
           settings = {
             user = {
+              email = "lunar-seal@ff15.eu";
               name = "lunar-seal";
             };
             alias = {

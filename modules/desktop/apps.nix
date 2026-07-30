@@ -37,6 +37,7 @@
 
     jetbrains.goland
     jetbrains.pycharm
+    jetbrains.rust-rover
     jetbrains.webstorm
     wireshark
 
@@ -45,5 +46,7 @@
 
     osu-lazer-bin
     supertuxkart
+
+    quickemu
   ];
 }
