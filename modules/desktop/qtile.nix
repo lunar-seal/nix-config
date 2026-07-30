@@ -286,6 +286,16 @@ in
   services.displayManager.sessionPackages = [ qtileWaylandSession ];
   services.displayManager.defaultSession = "qtile-wayland";
 
+  # X11 qtile session, purely so screensharing a single window works: the
+  # wlroots screencast portal is whole-output only, X11 does per-window natively.
+  services.xserver = {
+    enable = true;
+    windowManager.qtile = {
+      enable = true;
+      inherit configFile;
+    };
+  };
+
   home-manager.users.${user}.home.packages = with pkgs; [
     cliphist
     dmenu
