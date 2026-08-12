@@ -3,6 +3,11 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+// Per-host settings. niri.nix links the right niri-<host>.kdl here.
+// Includes are positional, so nothing below may set what host.kdl sets,
+// or it would override it.
+include "~/.config/niri/host.kdl"
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -133,10 +138,8 @@ layout {
     // You can also customize the heights that "switch-preset-window-height" (Mod+Shift+R) toggles between.
     // preset-window-heights { }
 
-    // You can change the default width of the new windows.
-    default-column-width { proportion 0.33; }
-    // If you leave the brackets empty, the windows themselves will decide their initial width.
-    // default-column-width {}
+    // default-column-width and preset-column-widths come from host.kdl,
+    // included at the top of this file. Do not set them here.
 
     // By default focus ring and border are rendered as a solid background rectangle
     // behind windows. That is, they will show up through semitransparent windows.
@@ -256,7 +259,6 @@ layout {
         // bottom 64
     }
 }
-
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.

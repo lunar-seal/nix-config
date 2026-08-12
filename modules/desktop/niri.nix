@@ -6,8 +6,6 @@
   ...
 }:
 let
-  hostKdl = ./niri-${config.networking.hostName}.kdl;
-
   # Spawn a command and pull its window into the focused column, since niri
   # has no way to open a window into an existing column.
   stack-under = pkgs.writeShellScriptBin "stack-under" ''
@@ -74,8 +72,8 @@ in
 
     services.swaync.enable = true;
     
-    xdg.configFile."niri/config.kdl".text =
-      lib.optionalString (builtins.pathExists hostKdl) (builtins.readFile hostKdl)
-      + builtins.readFile ./niri.kdl;
+    xdg.configFile."niri/config.kdl".source = ./niri.kdl;
+    # config.kdl ends with `include "~/.config/niri/host.kdl"`.
+    xdg.configFile."niri/host.kdl".source = ./niri-${config.networking.hostName}.kdl;
   };
 }

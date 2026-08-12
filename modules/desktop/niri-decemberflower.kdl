@@ -1,10 +1,10 @@
 // Included at the bottom of config.kdl, so these win over the shared layout.
 // Sections merge across includes — only what differs belongs here.
 layout {
+    // Laptop screen: open full width, Mod+R toggles half <-> full.
     preset-column-widths {
-        proportion 0.25
         proportion 0.5
-        proportion 0.66667
+        proportion 1.0
     }
-    default-column-width { proportion 0.33; }
+    default-column-width { proportion 1.0; }
 }
