@@ -467,10 +467,11 @@ binds {
     Mod+Page_Up        { focus-workspace-up; }
     Mod+I              { focus-workspace-down; }
     Mod+E              { focus-workspace-up; }
-    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Ctrl+U         { move-column-to-workspace-down; }
-    Mod+Ctrl+I         { move-column-to-workspace-up; }
+    // focus=false: send the column away without dragging focus along with it.
+    Mod+Ctrl+Page_Down { move-column-to-workspace-down focus=false; }
+    Mod+Ctrl+Page_Up   { move-column-to-workspace-up focus=false; }
+    Mod+Ctrl+U         { move-column-to-workspace-down focus=false; }
+    Mod+Ctrl+I         { move-column-to-workspace-up focus=false; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
@@ -489,8 +490,8 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down focus=false; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up focus=false; }
 
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }
@@ -530,15 +531,15 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Shift+Super+1 { move-column-to-workspace 1; }
-    Shift+Super+2 { move-column-to-workspace 2; }
-    Shift+Super+3 { move-column-to-workspace 3; }
-    Shift+Super+4 { move-column-to-workspace 4; }
-    Shift+Super+5 { move-column-to-workspace 5; }
-    Shift+Super+6 { move-column-to-workspace 6; }
-    Shift+Super+7 { move-column-to-workspace 7; }
-    Shift+Super+8 { move-column-to-workspace 8; }
-    Shift+Super+9 { move-column-to-workspace 9; }
+    Shift+Super+1 { move-column-to-workspace 1 focus=false; }
+    Shift+Super+2 { move-column-to-workspace 2 focus=false; }
+    Shift+Super+3 { move-column-to-workspace 3 focus=false; }
+    Shift+Super+4 { move-column-to-workspace 4 focus=false; }
+    Shift+Super+5 { move-column-to-workspace 5 focus=false; }
+    Shift+Super+6 { move-column-to-workspace 6 focus=false; }
+    Shift+Super+7 { move-column-to-workspace 7 focus=false; }
+    Shift+Super+8 { move-column-to-workspace 8 focus=false; }
+    Shift+Super+9 { move-column-to-workspace 9 focus=false; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
