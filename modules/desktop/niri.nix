@@ -73,7 +73,7 @@ in
     services.swaync.enable = true;
     
     xdg.configFile."niri/config.kdl".source = ./niri.kdl;
-    # config.kdl ends with `include "~/.config/niri/host.kdl"`.
+    # config.kdl starts with `include "~/.config/niri/host.kdl"`.
     xdg.configFile."niri/host.kdl".source = ./niri-${config.networking.hostName}.kdl;
   };
 }

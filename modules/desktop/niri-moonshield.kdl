@@ -1,5 +1,5 @@
-// Included at the bottom of config.kdl, so these win over the shared layout.
-// Sections merge across includes — only what differs belongs here.
+// Included at the top of config.kdl, so anything set below there wins over
+// this. Sections merge across includes — only what differs belongs here.
 layout {
     preset-column-widths {
         proportion 0.25
