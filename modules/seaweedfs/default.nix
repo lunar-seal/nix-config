@@ -56,6 +56,7 @@ in
         "-volume.index=leveldb"
         "-master.dir=/var/lib/seaweedfs/meta"
         "-master.volumeSizeLimitMB=${toString volumeSizeMB}"
+        "-filer.disk=hdd"
         "-ip=${overlayIp}"
         "-s3"
         "-s3.config=${config.age.secrets.seaweedfs-s3.path}"
