@@ -27,6 +27,8 @@ in
     group = "seaweedfs";
   };
 
+  environment.systemPackages = [ pkgs.seaweedfs ];
+
   systemd.tmpfiles.rules = [ "d ${cold} 0750 seaweedfs seaweedfs - -" ];
 
   age.secrets.seaweedfs-s3 = {
