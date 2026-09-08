@@ -11,14 +11,7 @@ let
   cold = "/isolinear/seaweedfs";
 
   volumeSizeMB = 1024;
-  hotVolumes = 16;
-  writableVolumes = 4;
-
-  configDir = pkgs.writeTextDir "master.toml" ''
-    [master.volume_growth]
-    copy_1 = ${toString writableVolumes}
-    threshold = 0.9
-  '';
+  hotVolumes = 48;
 in
 {
   users.groups.seaweedfs = { };
@@ -56,7 +49,6 @@ in
 
       ExecStart = lib.escapeShellArgs [
         (lib.getExe pkgs.seaweedfs)
-        "-config_dir=${configDir}"
         "server"
         "-dir=${hot},${cold}"
         "-volume.disk=ssd,hdd"
