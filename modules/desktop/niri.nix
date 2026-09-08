@@ -23,6 +23,8 @@ in
 {
   programs.niri.enable = true;
   programs.niri.package = pkgs.niri;
+  # plasma6 and niri both mkDefault this; break the tie in niri's favor.
+  services.displayManager.defaultSession = lib.mkForce "niri";
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
