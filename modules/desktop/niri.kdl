@@ -369,6 +369,7 @@ binds {
     Mod+U { spawn "firefox"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Super+S hotkey-overlay-title="Open or focus Steam" { spawn "focus-or-spawn" "^steam$" "steam"; }
     Super+D { spawn-sh "discord --enable-features=UseOzonePlatform --ozone-platform=wayland"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.

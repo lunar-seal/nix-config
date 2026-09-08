@@ -19,6 +19,20 @@ let
         'first(inputs | .WindowOpenedOrChanged.window.id | select(. and (IN($b[]) | not)))') || exit 1
     niri msg action consume-or-expel-window-left --id "$id"
   '';
+
+  # Steam won't raise its existing window the way discord does, so match on
+  # app-id and focus it ourselves; spawn only when nothing is open.
+  focus-or-spawn = pkgs.writeShellScriptBin "focus-or-spawn" ''
+    re=$1
+    shift
+    id=$(niri msg --json windows |
+      jq --arg re "$re" 'first(.[] | select(.app_id // "" | test($re; "i")) | .id)')
+    if [ -n "$id" ]; then
+      niri msg action focus-window --id "$id"
+    else
+      niri msg action spawn -- "$@"
+    fi
+  '';
 in
 {
   programs.niri.enable = true;
@@ -42,6 +56,7 @@ in
     home.packages = with pkgs; [
       alacritty
       brightnessctl
+      focus-or-spawn
       fuzzel
       grim
       jq
