@@ -49,7 +49,6 @@ in
       stack-under
       swaylock
       swaynotificationcenter
-      waybar
       wayland-utils
       wl-clipboard
       warpd
@@ -71,7 +70,14 @@ in
     };
 
     services.swaync.enable = true;
-    
+
+    programs.waybar = {
+      enable = true;
+      systemd.enable = true;
+      settings.mainBar = builtins.fromJSON (builtins.readFile ./waybar-config.json);
+      style = ./waybar-style.css;
+    };
+
     xdg.configFile."niri/config.kdl".source = ./niri.kdl;
     # config.kdl starts with `include "~/.config/niri/host.kdl"`.
     xdg.configFile."niri/host.kdl".source = ./niri-${config.networking.hostName}.kdl;
