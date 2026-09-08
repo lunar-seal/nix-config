@@ -13,5 +13,6 @@ in
 {
   "harmonia-signing-key.age".publicKeys = keys;
   "msmtprc.age".publicKeys = keys;
+  "seaweedfs-s3.json.age".publicKeys = keys;
   "msmtp-aliases.age".publicKeys = keys;
 }
