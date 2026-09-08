@@ -9,4 +9,7 @@
       extraArgs = "-system-composer";
     };
   };
+  environment.systemPackages = with pkgs; [
+    bottles
+  ];
 }

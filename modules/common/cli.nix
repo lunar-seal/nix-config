@@ -55,6 +55,7 @@
     lz4
     man-pages
     maven
+    mise
     ncdu
     ninja
     nix-index
