@@ -65,6 +65,7 @@
     pi-coding-agent
     powertop
     python3
+    rclone
     reptyr
     ripgrep
     s3cmd
