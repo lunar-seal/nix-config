@@ -62,7 +62,6 @@ in
         "-master.dir=/var/lib/seaweedfs/meta"
         "-master.volumeSizeLimitMB=${toString volumeSizeMB}"
         "-config_dir=${configDir}"
-        "-filer.disk=ssd"
         "-ip=${overlayIp}"
         "-s3"
         "-s3.config=${config.age.secrets.seaweedfs-s3.path}"
