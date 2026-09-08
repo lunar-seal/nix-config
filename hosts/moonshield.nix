@@ -24,7 +24,6 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
@@ -34,7 +33,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/685E-1D11";
+    device = "/dev/disk/by-uuid/7257-59F7";
     fsType = "vfat";
     options = [
       "fmask=0022"
@@ -42,7 +41,12 @@
     ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 32768;
+    }
+  ];
 
   hardware.enableRedistributableFirmware = true;
 }
