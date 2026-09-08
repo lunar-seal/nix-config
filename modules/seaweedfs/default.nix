@@ -54,6 +54,7 @@ in
 
       ExecStart = lib.escapeShellArgs [
         (lib.getExe pkgs.seaweedfs)
+        "-config_dir=${configDir}"
         "server"
         "-dir=${hot},${cold}"
         "-volume.disk=ssd,hdd"
@@ -61,7 +62,6 @@ in
         "-volume.index=leveldb"
         "-master.dir=/var/lib/seaweedfs/meta"
         "-master.volumeSizeLimitMB=${toString volumeSizeMB}"
-        "-config_dir=${configDir}"
         "-ip=${overlayIp}"
         "-s3"
         "-s3.config=${config.age.secrets.seaweedfs-s3.path}"
