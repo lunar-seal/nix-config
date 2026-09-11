@@ -7,6 +7,8 @@
 {
   networking.hostName = "moonshield";
 
+  services.openssh.reachableOn = [ "wg1" ];
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"

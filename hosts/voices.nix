@@ -14,6 +14,12 @@ args@{
   networking.hostName = "voices";
   networking.hostId = "db9cf15a";
 
+  # Deploy and cache target: answers on the LAN as well as on wireguard.
+  services.openssh.reachableOn = [
+    "eno2"
+    "wg1"
+  ];
+
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"

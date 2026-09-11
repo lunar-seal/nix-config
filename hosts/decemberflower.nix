@@ -10,6 +10,9 @@
 
   networking.hostName = "decemberflower";
 
+  # Laptop: roams onto untrusted wifi, so ssh answers on wireguard only.
+  services.openssh.reachableOn = [ "wg1" ];
+
   environment.systemPackages = [
     pkgs.ryzen-monitor-ng
     pkgs.ectool

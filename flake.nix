@@ -57,7 +57,6 @@
         ];
 
         voices = mkHost "voices" [
-          (inputs.import-tree ./modules/server)
           ./modules/seaweedfs
           ./modules/store-serve
           ./modules/zed-mail
