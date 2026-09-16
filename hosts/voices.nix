@@ -1,5 +1,4 @@
 args@{
-  inputs,
   lib,
   modulesPath,
   pkgs,
@@ -15,7 +14,7 @@ args@{
   networking.hostName = "voices";
   networking.hostId = "db9cf15a";
 
-  environment.systemPackages = [ inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+  environment.systemPackages = [ pkgs.herdr ];
 
   # Deploy and cache target: answers on the LAN as well as on wireguard.
   services.openssh.reachableOn = [
