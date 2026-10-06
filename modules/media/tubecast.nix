@@ -29,6 +29,9 @@ addons.buildKodiAddon {
     addons.requests
     addons.youtube
   ];
+  # Manual pairing needs device_id too, not just SSDP pairing:
+  # https://github.com/enen92/script.tubecast/issues/53#issuecomment-890308376
+  patches = [ ./tubecast-pairing.patch ];
   # Upstream picks a random TCP port; pin it so the firewall stays narrow.
   postPatch = ''
     substituteInPlace resources/lib/tubecast/chromecast.py \
