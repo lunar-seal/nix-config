@@ -8,6 +8,7 @@ let
   hosts = [
     "decemberflower"
     "moonshield"
+    "jester"
     "voices"
   ];
 in

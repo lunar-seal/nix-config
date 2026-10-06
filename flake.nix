@@ -56,6 +56,10 @@
           inputs.nix-private.nixosModules.default
         ];
 
+        jester = mkHost "jester" [
+          inputs.disko.nixosModules.disko
+        ];
+
         voices = mkHost "voices" [
           ./modules/seaweedfs
           ./modules/store-serve

@@ -5,6 +5,8 @@ let
   admin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF8koEKvE/Pgc6QyhDbCFKMwMvWPyLYKWlyl84q6qmXC";
   # /etc/ssh/ssh_host_ed25519_key.pub
   voices = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM0rfMYiaYBTgP21DnV5h0y7mePdSqayBfCIlOBfpxWb";
+  # Preserve the installer's /etc/ssh/ssh_host_ed25519_key on jester's SSD.
+  jester = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILysx9ZPZy/t4o8+djRC4x7JA4xMbLQZwewBXtvB5xFH";
   keys = [
     admin
     voices
@@ -15,4 +17,5 @@ in
   "msmtprc.age".publicKeys = keys;
   "seaweedfs-s3.json.age".publicKeys = keys;
   "msmtp-aliases.age".publicKeys = keys;
+  "jester-wifi.age".publicKeys = [ admin jester ];
 }

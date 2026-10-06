@@ -21,6 +21,7 @@ jobs:
         host:
           - decemberflower
           - moonshield
+          - jester
           - voices
     steps:
       - uses: actions/checkout@v7
