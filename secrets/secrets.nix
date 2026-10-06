@@ -25,4 +25,8 @@ in
     admin
     jester
   ];
+  "jester-porkbun.age".publicKeys = [
+    admin
+    jester
+  ];
 }

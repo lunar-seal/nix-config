@@ -28,7 +28,7 @@ in
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${kodi}/bin/kodi-standalone --windowing=gbm";
+      command = "${kodi}/bin/kodi-standalone --windowing=gbm --audio-backend=alsa";
       user = "kodi";
     };
   };

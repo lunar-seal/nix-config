@@ -8,10 +8,12 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./jester-disk-config.nix
+    ../modules/media/https.nix
   ];
 
   networking = {
     hostName = "jester";
+    domain = "ff15.eu";
     networkmanager.enable = true;
   };
   users.users.${user} = {
@@ -41,19 +43,17 @@
 
   services.openssh.reachableOn = [ "wlp170s0" ];
   services.avahi.allowInterfaces = [ "wlp170s0" ];
-  networking.firewall.interfaces.wlp170s0 = {
-    # Kodi HTTP/JSON-RPC and TubeCast's fixed DIAL port.
-    allowedTCPPorts = [
-      8080
-      9090
-      8008
-    ];
-    # TubeCast SSDP, discovery via mDNS, and Kodi's remote event server.
-    allowedUDPPorts = [
-      1900
-      5353
-      9777
-    ];
+  networking.firewall = {
+    # Replace the SSH module's interface-wide opening with source restrictions.
+    interfaces.wlp170s0.allowedTCPPorts = lib.mkForce [ ];
+    extraCommands = ''
+      iptables -A nixos-fw -i wlp170s0 -s 192.168.178.0/24 -p tcp -m multiport --dports 22,8443,8008 -j nixos-fw-accept
+      iptables -A nixos-fw -i wlp170s0 -s 192.168.178.0/24 -p udp -m multiport --dports 1900,5353 -j nixos-fw-accept
+      for subnet in fdf1:a045:71a::/64 fe80::/10; do
+        ip6tables -A nixos-fw -i wlp170s0 -s "$subnet" -p tcp -m multiport --dports 22,8443 -j nixos-fw-accept
+        ip6tables -A nixos-fw -i wlp170s0 -s "$subnet" -p udp --dport 5353 -j nixos-fw-accept
+      done
+    '';
   };
 
   boot.initrd.availableKernelModules = [
