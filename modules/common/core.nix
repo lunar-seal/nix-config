@@ -44,7 +44,7 @@ in
         "nix-command"
         "flakes"
       ];
-      substituters = lib.optional (!isStoreHost) storeUrl ++ [
+      substituters = [
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
       ];
