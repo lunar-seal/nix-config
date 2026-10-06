@@ -17,5 +17,12 @@ in
   "msmtprc.age".publicKeys = keys;
   "seaweedfs-s3.json.age".publicKeys = keys;
   "msmtp-aliases.age".publicKeys = keys;
-  "jester-wifi.age".publicKeys = [ admin jester ];
+  "jester-wifi.age".publicKeys = [
+    admin
+    jester
+  ];
+  "jester-kodi.age".publicKeys = [
+    admin
+    jester
+  ];
 }

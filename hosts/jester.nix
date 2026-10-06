@@ -13,10 +13,15 @@
   networking = {
     hostName = "jester";
     networkmanager.enable = true;
-    useDHCP = lib.mkForce false;
-    dhcpcd.enable = lib.mkForce false;
   };
-  users.users.${user}.extraGroups = [ "networkmanager" ];
+  users.users.${user} = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
+  };
+  documentation.dev.enable = lib.mkForce false;
 
   # Before the first reboot, preserve the installer's SSH host key on the SSD.
   # agenix uses it to decrypt the saved Wi-Fi profile before NetworkManager starts.
@@ -26,8 +31,30 @@
     mode = "0600";
     symlink = false;
   };
+  age.secrets.jester-kodi = {
+    file = ../secrets/jester-kodi.age;
+    path = "/home/kodi/.kodi/userdata/advancedsettings.xml";
+    owner = "kodi";
+    group = "users";
+    mode = "0600";
+  };
 
   services.openssh.reachableOn = [ "wlp170s0" ];
+  services.avahi.allowInterfaces = [ "wlp170s0" ];
+  networking.firewall.interfaces.wlp170s0 = {
+    # Kodi HTTP/JSON-RPC and TubeCast's fixed DIAL port.
+    allowedTCPPorts = [
+      8080
+      9090
+      8008
+    ];
+    # TubeCast SSDP, discovery via mDNS, and Kodi's remote event server.
+    allowedUDPPorts = [
+      1900
+      5353
+      9777
+    ];
+  };
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"

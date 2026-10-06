@@ -33,7 +33,6 @@
             user = "langj";
           };
           modules = [
-            (inputs.import-tree ./modules/common)
             inputs.agenix.nixosModules.default
             # Only the ed25519 host key; never fall back to the RSA one.
             { age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ]; }
@@ -45,6 +44,7 @@
     {
       nixosConfigurations = {
         decemberflower = mkHost "decemberflower" [
+          (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/desktop)
           (inputs.import-tree ./modules/laptop)
           inputs.lanzaboote.nixosModules.lanzaboote
@@ -52,15 +52,20 @@
         ];
 
         moonshield = mkHost "moonshield" [
+          (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/desktop)
           inputs.nix-private.nixosModules.default
         ];
 
         jester = mkHost "jester" [
+          ./modules/common/core.nix
+          ./modules/common/openssh.nix
+          ./modules/media
           inputs.disko.nixosModules.disko
         ];
 
         voices = mkHost "voices" [
+          (inputs.import-tree ./modules/common)
           ./modules/seaweedfs
           ./modules/store-serve
           ./modules/zed-mail
