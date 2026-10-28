@@ -33,7 +33,6 @@
     obs-studio
     obsidian
     vlc
-    zotero
 
     jetbrains.goland
     jetbrains.pycharm
