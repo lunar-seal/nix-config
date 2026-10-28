@@ -34,7 +34,12 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: nix flake lock --no-update-lock-file
-      # Evaluate the system derivation, allowing import-from-derivation (e.g. fw-fanctrl).
+      - name: Install pinned iets classic commands
+        run: |
+          nix build --no-update-lock-file ".#nixosConfigurations.${{ matrix.host }}.config.nix.package" --out-link "$RUNNER_TEMP/iets-classic"
+          echo "$RUNNER_TEMP/iets-classic/bin" >> "$GITHUB_PATH"
+      # Classic mode uses iets where supported and falls back to Nix for IFD.
+      # The lock was checked above; --no-update-lock-file here forces a fallback.
       # Evaluation may fetch/build dependencies; voices builds the full system closures.
       - name: Evaluate host
-        run: nix eval --raw --no-update-lock-file ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"
+        run: nix eval --raw ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"

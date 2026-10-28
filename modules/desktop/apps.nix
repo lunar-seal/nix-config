@@ -34,14 +34,7 @@
     obsidian
     vlc
 
-    jetbrains.goland
-    jetbrains.pycharm
-    jetbrains.rust-rover
-    jetbrains.webstorm
     wireshark
-
-    vscodium
-    zed-editor
 
     osu-lazer-bin
     supertuxkart

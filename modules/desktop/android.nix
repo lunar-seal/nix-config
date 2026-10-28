@@ -5,9 +5,7 @@
   environment.systemPackages = [ pkgs.android-tools ];
 
   home-manager.users.${user}.home.packages = with pkgs; [
-    android-studio
     apktool
     apksigner
-    android-studio-tools
   ];
 }

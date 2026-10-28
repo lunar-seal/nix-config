@@ -6,6 +6,11 @@
   ...
 }:
 let
+  wallpaper = pkgs.fetchurl {
+    url = "https://nya.owo.ff15.eu/media_attachments/files/116/622/605/459/387/323/original/46f3220014922c75.webp";
+    hash = "sha256-lVeVwrXraJkTuWlbBmwxZ7ft48Yv+op5Q4QE8k1cDTU=";
+  };
+
   # Spawn a command and pull its window into the focused column, since niri
   # has no way to open a window into an existing column.
   stack-under = pkgs.writeShellScriptBin "stack-under" ''
@@ -87,6 +92,19 @@ in
     };
 
     services.swaync.enable = true;
+
+    systemd.user.services.swaybg = {
+      Unit = {
+        Description = "Niri desktop wallpaper";
+        After = [ "niri.service" ];
+        PartOf = [ "niri.service" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} -m fill";
+        Restart = "on-failure";
+      };
+      Install.WantedBy = [ "niri.service" ];
+    };
 
     programs.waybar = {
       enable = true;

@@ -3,6 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     import-tree.url = "github:vic/import-tree";
+    iets.url = "github:numtide/iets";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
@@ -36,6 +37,8 @@
           };
           modules = [
             inputs.agenix.nixosModules.default
+            inputs.iets.nixosModules.default
+            { iets.classic.enable = true; }
             # Only the ed25519 host key; never fall back to the RSA one.
             { age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ]; }
           ]
@@ -68,6 +71,7 @@
 
         voices = mkHost "voices" [
           (inputs.import-tree ./modules/common)
+          ./modules/development/zed.nix
           ./modules/seaweedfs
           ./modules/store-serve
           ./modules/zed-mail
