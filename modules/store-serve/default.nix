@@ -1,6 +1,14 @@
-{ config, ... }:
+{ config, inputs, ... }:
 {
-  imports = [ ./nightly-build.nix ];
+  imports = [
+    ./nightly-build.nix
+    inputs.nix-cache-beacon.nixosModules.default
+  ];
+
+  services.nix-cache-beacon.advert = {
+    enable = true;
+    port = 5000;
+  };
 
   # Serve the local store as a binary cache: zstd on the wire, signed
   # narinfos, no separate storage. LAN-only via the firewall below.
@@ -19,4 +27,5 @@
   nix.settings.secret-key-files = [ config.age.secrets.harmonia-signing-key.path ];
 
   networking.firewall.interfaces.eno2.allowedTCPPorts = [ 5000 ];
+  networking.firewall.interfaces.eno2.allowedUDPPorts = [ 5353 ];
 }

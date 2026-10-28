@@ -130,6 +130,26 @@
         "type": "github"
       }
     },
+    "nix-cache-beacon": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786104427,
+        "narHash": "sha256-Gu6qfMbxHDV5PF80YBfOdOTYAaxJvQ6UfE4yMc5jEdQ=",
+        "owner": "adisbladis",
+        "repo": "nix-cache-beacon",
+        "rev": "8cb2c7b93c0f66485be62311e9e0894cc6370c94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "adisbladis",
+        "repo": "nix-cache-beacon",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -226,6 +246,7 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "lanzaboote": "lanzaboote",
+        "nix-cache-beacon": "nix-cache-beacon",
         "nix-index-database": "nix-index-database",
         "nix-private": "nix-private",
         "nixpkgs": "nixpkgs",
