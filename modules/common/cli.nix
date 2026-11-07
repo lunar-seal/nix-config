@@ -10,6 +10,7 @@
     ntfs3g
     sbctl
     sox
+    tcpdump
   ];
   services.fwupd.enable = true;
 

@@ -14,8 +14,6 @@ args@{
   networking.hostName = "voices";
   networking.hostId = "db9cf15a";
 
-  environment.systemPackages = [ pkgs.herdr ];
-
   # Deploy and cache target: answers on the LAN as well as on wireguard.
   services.openssh.reachableOn = [
     "eno2"

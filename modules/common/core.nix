@@ -64,7 +64,10 @@ in
 
   documentation.dev.enable = true;
 
-  environment.systemPackages = [ pkgs.git ];
+  environment.systemPackages = [
+    pkgs.git
+    pkgs.herdr
+  ];
 
   security = {
     sudo.enable = false;
