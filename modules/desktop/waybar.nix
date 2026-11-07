@@ -48,6 +48,9 @@ in
           "niri/window"
         ];
         modules-right = [
+          "custom/local-failures"
+          "memory#warning"
+          "custom/cpu-pressure"
           "network"
           "privacy"
           "pulseaudio#microphone"
