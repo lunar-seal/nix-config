@@ -42,12 +42,11 @@ in
 {
   programs.niri.enable = true;
   programs.niri.package = pkgs.niri;
-  # plasma6 and niri both mkDefault this; break the tie in niri's favor.
+  # Plasma and Niri both supply defaults; use Niri for this desktop.
   services.displayManager.defaultSession = lib.mkForce "niri";
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
-    TERMINAL = "alacritty";
   };
 
   environment.systemPackages = with pkgs; [
@@ -59,7 +58,6 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      alacritty
       brightnessctl
       focus-or-spawn
       fuzzel
@@ -76,13 +74,6 @@ in
       warpd
     ];
 
-    home.sessionVariables.TERMINAL = "alacritty";
-
-    programs.alacritty = {
-      enable = true;
-      settings.window.decorations = "None";
-    };
-
     programs.fuzzel = {
       enable = true;
       settings.main = {
@@ -90,8 +81,6 @@ in
         terminal = "alacritty -e";
       };
     };
-
-    services.swaync.enable = true;
 
     systemd.user.services.swaybg = {
       Unit = {
@@ -106,14 +95,8 @@ in
       Install.WantedBy = [ "niri.service" ];
     };
 
-    programs.waybar = {
-      enable = true;
-      systemd.enable = true;
-      settings.mainBar = builtins.fromJSON (builtins.readFile ./waybar-config.json);
-      style = ./waybar-style.css;
-    };
-
-    xdg.configFile."niri/config.kdl".source = ./niri.kdl;
+    # Feature modules append native Niri includes for their own bindings.
+    xdg.configFile."niri/config.kdl".text = builtins.readFile ./niri.kdl;
     # config.kdl starts with `include "~/.config/niri/host.kdl"`.
     xdg.configFile."niri/host.kdl".source = ./niri-${config.networking.hostName}.kdl;
   };

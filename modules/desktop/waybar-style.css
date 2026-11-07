@@ -5,15 +5,15 @@
 }
 
 window#waybar {
-    background-color: rgba(26, 33, 46, 1);
-    border-bottom: 0px solid rgba(100, 114, 125, 0.5);
-    color: #ffffff;
+    background-color: @bar_background;
+    border-bottom: 0px solid @bar_border;
+    color: @bar_foreground;
 }
 
 #workspaces button {
     padding: 0 2px;
     background-color: transparent;
-    color: #ffffff;
+    color: @bar_foreground;
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
     /* Avoid rounded borders under each workspace name */
@@ -23,26 +23,26 @@ window#waybar {
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 -3px #ffffff;
+    background: @bar_hover;
+    box-shadow: inset 0 -3px @bar_foreground;
 }
 
-#workspaces button.focused {
-    box-shadow: inset 0 -3px #ffffff;
+#workspaces button.focused,
+#workspaces button.active {
+    box-shadow: inset 0 -3px @bar_foreground;
 }
 
 #workspaces button.empty {
-    color: rgba(255, 255, 255, 0.35);
+    color: @bar_empty;
 }
 
 #clock,
-#battery,
 #backlight,
 #network,
 #pulseaudio,
 #tray {
     padding: 0 2px;
-    color: #ffffff;
+    color: @bar_foreground;
 }
 
 #window,
@@ -55,24 +55,15 @@ window#waybar {
     margin-left: 0;
 }
 
-@keyframes blink {
-    to {
-        color: #000000;
-    }
-}
-
-#battery.critical:not(.charging) {
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
+}
+
+/* Keep the network slot steady across connection states. */
+#network {
+    min-width: 20px;
 }
