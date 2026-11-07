@@ -57,6 +57,7 @@ in
           "pulseaudio"
           "backlight"
           "battery"
+          "custom/xbox-battery"
           "custom/notifications"
           "clock"
           "tray"
