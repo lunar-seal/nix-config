@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# Only one updater may advance nightly at a time.
+concurrency:
+  group: nightly-lock-update
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -15,22 +20,27 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+      - name: Resolve update target
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git fetch origin main
+          echo "NIGHTLY_UPDATE_BASE_COMMIT=$(git rev-parse FETCH_HEAD)" >> "$GITHUB_ENV"
+          previous=$(git ls-remote origin refs/heads/nightly | cut -f1)
+          echo "NIGHTLY_PREVIOUS=$previous" >> "$GITHUB_ENV"
       - uses: cachix/install-nix-action@v31
       - run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.NIX_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
+      - name: Update and publish nightly candidate
+        run: |
           # nightly is always main plus one fresh lock commit; recreating it
           # avoids merge conflicts when main also touched flake.lock.
-          git fetch origin main
-          git switch -C nightly origin/main
+          git switch -C nightly "$NIGHTLY_UPDATE_BASE_COMMIT"
 
           nix flake update
           git add flake.lock
           git diff --cached --quiet || git commit -m "chore: update flake.lock"
-          git push --force origin HEAD:nightly
+          git push --force-with-lease="refs/heads/nightly:$NIGHTLY_PREVIOUS" origin HEAD:refs/heads/nightly
