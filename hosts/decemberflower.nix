@@ -6,7 +6,10 @@
   ...
 }:
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../modules/hardware/framework-audio.nix
+  ];
 
   networking.hostName = "decemberflower";
 
