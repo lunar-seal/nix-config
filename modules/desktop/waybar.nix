@@ -59,6 +59,7 @@ in
           "battery"
           "custom/xbox-battery"
           "custom/tea-timer"
+          "custom/keep-awake"
           "custom/notifications"
           "clock"
           "tray"
