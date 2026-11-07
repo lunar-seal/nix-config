@@ -58,6 +58,7 @@ in
           "backlight"
           "battery"
           "custom/xbox-battery"
+          "custom/tea-timer"
           "custom/notifications"
           "clock"
           "tray"
