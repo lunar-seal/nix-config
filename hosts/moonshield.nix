@@ -5,6 +5,8 @@
   ...
 }:
 {
+  imports = [ ../modules/hardware/ddcci.nix ];
+
   networking.hostName = "moonshield";
 
   services.openssh.reachableOn = [ "wg1" ];
