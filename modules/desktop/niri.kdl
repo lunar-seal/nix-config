@@ -367,6 +367,7 @@ binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Shift+Return hotkey-overlay-title="Open a Terminal below this window" { spawn "stack-under" "alacritty"; }
     Mod+U { spawn "firefox"; }
+    Mod+N hotkey-overlay-title="Move pointer with warpd hints" { spawn "warpd" "--hint"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Super+S hotkey-overlay-title="Open or focus Steam" { spawn "focus-or-spawn" "^steam$" "steam"; }
