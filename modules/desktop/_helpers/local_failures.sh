@@ -30,11 +30,11 @@ collect() {
         fi
         read -r filesystem device <<<"$identity"
         case "$filesystem" in
-            ext[234] | btrfs | xfs | zfs | bcachefs | f2fs | vfat | exfat | ntfs3 | reiserfs | jfs)
-                ;;
-            *)
-                continue
-                ;;
+        ext[234] | btrfs | xfs | zfs | bcachefs | f2fs | vfat | exfat | ntfs3 | reiserfs | jfs)
+            ;;
+        *)
+            continue
+            ;;
         esac
         [[ -z "${seen[$device]:-}" ]] || continue
         seen[$device]=1
@@ -57,7 +57,11 @@ collect() {
             notice true "$mount: $free_inodes inodes available"
         fi
     done < <(jq -r '.mounts[]' "$ATTENTION_CONFIG")
-
+    while IFS= read -r collector; do
+        if ! "$collector"; then
+            notice false "Warning source unavailable: ${collector##*/}"
+        fi
+    done < <(jq -r '.collectors[]' "$ATTENTION_CONFIG")
 }
 issues=$(collect)
 if [[ "${1:-status}" == details ]]; then

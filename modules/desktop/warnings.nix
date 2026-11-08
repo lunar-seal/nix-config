@@ -1,4 +1,4 @@
-# One attention indicator for local services and storage.
+# One attention indicator for local problems and configured warning sources.
 {
   config,
   lib,
@@ -38,6 +38,7 @@ let
   settings = pkgs.writeText "local-attention.json" (
     builtins.toJSON {
       host = config.networking.hostName;
+      collectors = config.desktop.warnings.collectors;
       inherit (storage) mounts;
       thresholds = removeAttrs storage [ "mounts" ];
     }
@@ -57,11 +58,16 @@ let
   };
   bindings = pkgs.writeText "niri-service-failures.kdl" ''
     binds {
-        Super+Alt+F hotkey-overlay-title="Warnings: services and storage" { spawn "${pkgs.alacritty}/bin/alacritty" "--hold" "-e" "${local-failures}/bin/local-failures" "details"; }
+        Super+Alt+F hotkey-overlay-title="Warnings" { spawn "${pkgs.alacritty}/bin/alacritty" "--hold" "-e" "${local-failures}/bin/local-failures" "details"; }
     }
   '';
 in
 {
+  options.desktop.warnings.collectors = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ ];
+    description = "Local commands emitting JSON warning objects with message and alert fields. Network sources should read a background-refreshed cache.";
+  };
   options.desktop.warnings.storage = {
     mounts = lib.mkOption {
       type = lib.types.listOf lib.types.str;
