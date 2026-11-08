@@ -9,6 +9,8 @@ let
     name = "cpu-pressure";
     runtimeInputs = [
       pkgs.gawk
+      pkgs.glibc.bin
+      pkgs.jq
       pkgs.coreutils
       pkgs.util-linux
     ];
