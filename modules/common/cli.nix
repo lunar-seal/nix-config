@@ -2,17 +2,24 @@
 {
   environment.systemPackages = with pkgs; [
     cacert
+    dig
     doas-sudo-shim
+    ethtool
     fwupd
+    iperf3
     lm_sensors
+    lsof
     networkmanager
     nixd
     ntfs3g
     sbctl
+    socat
     sox
+    sysstat
     tcpdump
   ];
   services.fwupd.enable = true;
+  programs.mtr.enable = true;
 
   programs.neovim = {
     enable = true;
@@ -37,6 +44,7 @@
     conda
     coreutils-full
     direnv
+    fd
     file
     fzf
     gcc
@@ -51,6 +59,7 @@
     jq
     keyutils
     kubectl
+    lazygit
     libarchive
     lolcat
     lz4
