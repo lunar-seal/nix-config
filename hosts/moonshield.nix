@@ -9,7 +9,11 @@
 
   networking.hostName = "moonshield";
 
-  services.openssh.reachableOn = [ "wg1" ];
+  # Allow SSH over the local Ethernet LAN as well as WireGuard.
+  services.openssh.reachableOn = [
+    "enp6s0"
+    "wg1"
+  ];
 
   boot.initrd.availableKernelModules = [
     "nvme"
