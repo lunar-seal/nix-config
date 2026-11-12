@@ -14,6 +14,8 @@
     };
     oh-my-zsh = {
       enable = true;
+      # Keep shell startup independent of saved directories and project envs.
+      # Use direnv explicitly instead of running it from startup/prompt hooks.
       plugins = [
         "git"
         "aliases"
@@ -30,9 +32,7 @@
         "copyfile"
         "cp"
         "dircycle"
-        "direnv"
         "dirhistory"
-        "dirpersist"
         "docker-compose"
         "dotenv"
         "dotnet"
