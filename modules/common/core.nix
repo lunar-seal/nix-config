@@ -64,6 +64,9 @@ in
 
   documentation.dev.enable = true;
 
+  # Let rebuild collect the activation password before the system build.
+  system.tools.nixos-rebuild.enableRun0Elevation = true;
+
   environment.systemPackages = [
     pkgs.git
     pkgs.herdr
