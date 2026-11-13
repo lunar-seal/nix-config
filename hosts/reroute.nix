@@ -201,6 +201,10 @@
   users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOO5ut5KjZhkSstx0Q+rJ5ZExj0jSoQ/rViJf4PRwX7P"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKNuqanPuzuT1tPnbodKQKkwNxaYMAy48qy5rnycYN4"
+    ];
   };
   # Bootstrap administration works before a local password is set for doas.
   users.users.root.openssh.authorizedKeys.keys =

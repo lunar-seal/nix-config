@@ -14,6 +14,11 @@ args@{
   networking.hostName = "voices";
   networking.hostId = "db9cf15a";
 
+  users.users.${user}.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOO5ut5KjZhkSstx0Q+rJ5ZExj0jSoQ/rViJf4PRwX7P"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKNuqanPuzuT1tPnbodKQKkwNxaYMAy48qy5rnycYN4"
+  ];
+
   # Deploy and cache target: answers on the LAN as well as on wireguard.
   services.openssh.reachableOn = [
     "eno2"
