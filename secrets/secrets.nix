@@ -20,6 +20,9 @@ in
 {
   "reroute-wg0.age".publicKeys = rerouteKeys;
   "reroute-wg1.age".publicKeys = rerouteKeys;
+  "reroute-crowdsec-local.age".publicKeys = rerouteKeys;
+  "reroute-crowdsec-online.age".publicKeys = rerouteKeys;
+  "reroute-crowdsec-bouncer.age".publicKeys = rerouteKeys;
   "harmonia-signing-key.age".publicKeys = keys;
   "msmtprc.age".publicKeys = keys;
   "seaweedfs-s3.json.age".publicKeys = keys;

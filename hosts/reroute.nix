@@ -9,12 +9,38 @@
   age.secrets = {
     reroute-wg0.file = ../secrets/reroute-wg0.age;
     reroute-wg1.file = ../secrets/reroute-wg1.age;
-
+    reroute-crowdsec-local = lib.mkIf config.services.crowdsec.enable {
+      file = ../secrets/reroute-crowdsec-local.age;
+      owner = config.services.crowdsec.user;
+      mode = "0400";
+    };
+    reroute-crowdsec-online = lib.mkIf config.services.crowdsec.enable {
+      file = ../secrets/reroute-crowdsec-online.age;
+      owner = config.services.crowdsec.user;
+      mode = "0400";
+    };
+    reroute-crowdsec-bouncer = lib.mkIf config.services.crowdsec.enable {
+      file = ../secrets/reroute-crowdsec-bouncer.age;
+    };
+  };
+  services.crowdsec.enable = true;
+  services.crowdsec.settings.config.api = lib.mkIf config.services.crowdsec.enable {
+    client.credentials_path = config.age.secrets.reroute-crowdsec-local.path;
+    server.online_client.credentials_path = config.age.secrets.reroute-crowdsec-online.path;
+  };
+  services.crowdsec-firewall-bouncer = lib.mkIf config.services.crowdsec.enable {
+    registerBouncer.enable = false;
+    secrets.apiKeyPath = config.age.secrets.reroute-crowdsec-bouncer.path;
   };
   imports = [
+    ../modules/crowdsec
     (modulesPath + "/profiles/qemu-guest.nix")
     ../modules/wireguard/server.nix
     ./reroute-disk-config.nix
+  ];
+
+  services.crowdsecProtection.staticMediaPaths."furizon.ff15.eu" = [
+    "(?i)^/items/[0-9a-f-]+/images/[^/?]+(/[0-9]+)?([?].*)?$"
   ];
 
   services.wireguardHub.uplink = "uplink";
