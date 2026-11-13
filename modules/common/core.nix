@@ -70,6 +70,7 @@ in
   environment.systemPackages = [
     pkgs.git
     pkgs.herdr
+    pkgs.herdr-core
   ];
 
   security = {
