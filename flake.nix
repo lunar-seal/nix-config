@@ -26,13 +26,14 @@
     let
       system = "x86_64-linux";
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      mkHost =
-        name: modules:
+      mkHost = name: modules: mkHostFor system name modules;
+      mkHostFor =
+        hostSystem: name: modules:
         inputs.nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = hostSystem;
           specialArgs = {
             inherit inputs;
-            pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${system};
+            pkgs-stable = inputs.nixpkgs-stable.legacyPackages.${hostSystem};
             user = "langj";
           };
           modules = [
@@ -48,6 +49,12 @@
     in
     {
       nixosConfigurations = {
+        reroute = mkHostFor "aarch64-linux" "reroute" [
+          ./modules/common/core.nix
+          ./modules/common/openssh.nix
+          inputs.disko.nixosModules.disko
+        ];
+
         decemberflower = mkHost "decemberflower" [
           (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/desktop)

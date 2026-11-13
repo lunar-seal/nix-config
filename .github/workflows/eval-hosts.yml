@@ -23,6 +23,7 @@ jobs:
           - moonshield
           - jester
           - voices
+          - reroute
     steps:
       - uses: actions/checkout@v7
         with:
