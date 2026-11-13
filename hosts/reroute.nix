@@ -8,9 +8,14 @@
 }:
 {
   imports = [
+    ../modules/crowdsec
     (modulesPath + "/profiles/qemu-guest.nix")
     ../modules/wireguard/server.nix
     ./reroute-disk-config.nix
+  ];
+
+  services.crowdsecProtection.staticMediaPaths."furizon.ff15.eu" = [
+    "(?i)^/items/[0-9a-f-]+/images/[^/?]+(/[0-9]+)?([?].*)?$"
   ];
 
   services.wireguardHub.uplink = "uplink";
