@@ -4,32 +4,15 @@ let
   speakerRoute = "Speakers";
 in
 {
+  imports = [ ./easyeffects.nix ];
+
   home-manager.users.${user} = {
     services.easyeffects = {
-      enable = true;
       # Native device/route autoload selects speaker correction or passthrough.
       extraPresets."Gracefu (Nix)" = builtins.fromJSON (
         builtins.readFile ./_framework-audio/gracefu.json
       );
-      extraPresets."Passthrough (Nix)".output = {
-        plugins_order = [ ];
-        blocklist = [ ];
-      };
-      settings = {
-        Window = {
-          outputAutoloadingUsesFallback = true;
-          outputAutoloadingFallbackPreset = "Passthrough (Nix)";
-        };
-        EffectsPipelines = {
-          processAllOutputs = true;
-          processAllInputs = false;
-        };
-        StreamOutputs = {
-          useDefaultOutputDevice = true;
-          # Start clean until PipeWire announces the current device and route.
-          plugins = "";
-        };
-      };
+
     };
     xdg.dataFile."easyeffects/autoload/output/${speakerDevice}:${speakerRoute}.json".text =
       builtins.toJSON

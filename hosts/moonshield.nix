@@ -5,7 +5,10 @@
   ...
 }:
 {
-  imports = [ ../modules/hardware/ddcci.nix ];
+  imports = [
+    ../modules/hardware/ddcci.nix
+    ../modules/hardware/dt990-audio.nix
+  ];
 
   networking.hostName = "moonshield";
 
