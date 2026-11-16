@@ -43,7 +43,8 @@
     "zenpower"
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  # Track the default kernel: current Mesa requires amdgpu from Linux >= 6.11.2.
+  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.kernelParams = [
     "amd_pstate=active"
