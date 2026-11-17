@@ -1,6 +1,9 @@
 { pkgs, user, ... }:
 {
-  nix.settings.trusted-users = [ "root" "langj" ];
+  nix.settings.trusted-users = [
+    "root"
+    "langj"
+  ];
   users.users.${user} = {
     isNormalUser = true;
     description = user;

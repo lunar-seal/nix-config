@@ -13,8 +13,7 @@
     ZED_EMAIL_PROG = lib.getExe pkgs.msmtp;
     # --aliases maps the local "root" to the real recipient, keeping the
     # address out of the repo and the store.
-    ZED_EMAIL_OPTS =
-      "-C ${config.age.secrets.msmtprc.path} --aliases=${config.age.secrets.msmtp-aliases.path} @ADDRESS@";
+    ZED_EMAIL_OPTS = "-C ${config.age.secrets.msmtprc.path} --aliases=${config.age.secrets.msmtp-aliases.path} @ADDRESS@";
   };
   age.secrets = {
     msmtprc.file = ../../secrets/msmtprc.age;
