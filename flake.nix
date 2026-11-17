@@ -56,6 +56,7 @@
         ];
 
         decemberflower = mkHost "decemberflower" [
+          ./modules/cache-beacon
           (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/desktop)
           (inputs.import-tree ./modules/laptop)
@@ -64,12 +65,14 @@
         ];
 
         moonshield = mkHost "moonshield" [
+          ./modules/cache-beacon
           (inputs.import-tree ./modules/common)
           (inputs.import-tree ./modules/desktop)
           inputs.nix-private.nixosModules.default
         ];
 
         jester = mkHost "jester" [
+          ./modules/cache-beacon
           ./modules/common/core.nix
           ./modules/common/openssh.nix
           ./modules/media

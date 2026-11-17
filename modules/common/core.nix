@@ -44,13 +44,17 @@ in
         "nix-command"
         "flakes"
       ];
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://cache.nixos.org/"
+      # mkForce drops the cache.nixos.org/ that NixOS appends by default.
+      substituters = lib.mkForce [
+        # Lookup order is by priority (lower first), not list order.
+        "https://cache.nixos.org/?priority=40"
+        "https://nix-community.cachix.org?priority=41"
+        "https://cache.numtide.com?priority=50"
       ];
       trusted-public-keys = [
         "voices-1:jYqlk3kV3BY58jbWu9uWKO+ieLqVNmN5T/j/4H5VNIc="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
     };
   };
