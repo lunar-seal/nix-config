@@ -22,6 +22,7 @@
     ffmpeg
     geeqie
     gimp-with-plugins
+    herdr-desktop
     pkgs-stable.handbrake
     imagemagick
     jellyfin-mpv-shim
